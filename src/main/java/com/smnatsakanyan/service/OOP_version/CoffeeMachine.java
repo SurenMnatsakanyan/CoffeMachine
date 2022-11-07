@@ -24,14 +24,11 @@ public class CoffeeMachine {
         if(deductedWater<=0 || deductedCoffeeBeansG<= 0 || deductedMilkMl<=0 || deductedCup <= 0 ){
             throw new NotEnoughCoffeeException("Unfortunately there is no enough resources right now.");
         }else {
-            supplies.setWaterMl(deductedWater);
-            supplies.setCoffeeBeansG(deductedCoffeeBeansG);
-            supplies.setMilkMl(deductedMilkMl);
-            supplies.setNumberOfCups(deductedCup);
+           this.setSupplies(new Supplies(deductedWater,deductedMilkMl,deductedCoffeeBeansG,deductedCup));
         }
     }
 
-    public void afterOrderedSupplies(Coffee coffee, CoffeeMachine coffeeMachine, int howMany) throws NotEnoughMoneyException{
+    public void afterOrderedSupplies(Coffee coffee, CoffeeMachine coffeeMachine, int howMany) throws NotEnoughMoneyException, NotEnoughCoffeeException{
         int price = coffee.getPrice();
         int currentMoney = coffeeMachine.getMoney();
         Supplies supplies = null;
@@ -41,19 +38,15 @@ public class CoffeeMachine {
         else {
             coffeeMachine.setMoney(currentMoney + price);
             if (coffee.getName().equals("Espresso")) {
-                supplies = new Supplies(coffee.getWaterMl(), 0, coffee.getCoffeeMg(), howMany);
+                supplies = new Supplies(howMany * coffee.getWaterMl(), 0, howMany * coffee.getCoffeeMg(), howMany);
             } else if (coffee.getName().equals("Latte")) {
                 Latte latte = (Latte) coffee;
-                supplies = new Supplies(latte.getWaterMl(), latte.getMilkMl(), latte.getCoffeeMg(), howMany);
+                supplies = new Supplies(howMany * latte.getWaterMl(),howMany *  latte.getMilkMl(), howMany * latte.getCoffeeMg(), howMany);
             } else if (coffee.getName().equals("Cappuccino")) {
                 Cappuccino cappuccino = (Cappuccino) coffee;
-                supplies = new Supplies(cappuccino.getWaterMl(), cappuccino.getMilkMl(), cappuccino.getCoffeeMg(), howMany);
+                supplies = new Supplies(howMany * cappuccino.getWaterMl(),howMany *  cappuccino.getMilkMl(),howMany *  cappuccino.getCoffeeMg(), howMany);
             }
-            try {
                 coffeeMachine.deductingResources(supplies);
-            } catch (NotEnoughCoffeeException e) {
-                e.printStackTrace();
-            }
         }
     }
 

@@ -14,7 +14,7 @@ public class Cappuccino extends Coffee{
     }
 
     public Cappuccino() {
-        this(350,25,75);
+        this(200,12,100);
     }
 
     //In future maybe we change the  waterMl, coffemg,milkMl. Price is assumed to never change.

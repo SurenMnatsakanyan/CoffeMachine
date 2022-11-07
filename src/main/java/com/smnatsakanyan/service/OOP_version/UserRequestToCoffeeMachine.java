@@ -17,12 +17,8 @@ public class UserRequestToCoffeeMachine {
     }
 
     //logic here
-    public void buy(int howMany){
-         try {
+    public void buy(int howMany) throws NotEnoughCoffeeException, NotEnoughMoneyException{
              coffeeMachine.afterOrderedSupplies(coffee,coffeeMachine,howMany);
-         }catch (NotEnoughMoneyException e){
-             e.printStackTrace();
-         }
     }
 
     public int getMoney() {

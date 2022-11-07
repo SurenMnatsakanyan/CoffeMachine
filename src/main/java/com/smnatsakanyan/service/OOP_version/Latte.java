@@ -14,7 +14,7 @@ public class Latte extends  Coffee{
     }
 
     public Latte() {
-        this(350,25,75);
+        this(350,20,75);
     }
 
     //In future maybe we change the  waterMl, coffeeMg,milkMl. Price is assumed to never change.

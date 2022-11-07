@@ -10,9 +10,12 @@ public class AdminRequest implements adminInterface {
     }
 
     @Override
-    public void fill() {
-        Supplies supplies = new Supplies(400,540, 120,9);
-        coffeeMachine.setSupplies(supplies);
+    public void fill(Supplies supplies){
+        int water = this.coffeeMachine.getSupplies().getWaterMl() + supplies.getWaterMl();
+        int milk = this.coffeeMachine.getSupplies().getMilkMl() + supplies.getMilkMl();
+        int coffee = this.coffeeMachine.getSupplies().getCoffeeBeansG() + supplies.getCoffeeBeansG();
+        int cups = this.coffeeMachine.getSupplies().getNumberOfCups() + supplies.getNumberOfCups();
+        coffeeMachine.setSupplies(new Supplies(water,milk,coffee,cups));
     }
 
     @Override
