@@ -1,5 +1,7 @@
 package com.smnatsakanyan.service.OOP_version;
 
+import java.util.Objects;
+
 public class Supplies {
     private int waterMl;
     private  int milkMl;
@@ -54,5 +56,18 @@ public class Supplies {
 
     public void setNumberOfCups(int numberOfCups) {
         this.numberOfCups = numberOfCups;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Supplies supplies = (Supplies) o;
+        return waterMl == supplies.waterMl && milkMl == supplies.milkMl && coffeeBeansG == supplies.coffeeBeansG && numberOfCups == supplies.numberOfCups;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(waterMl, milkMl, coffeeBeansG, numberOfCups);
     }
 }

@@ -1,28 +1,25 @@
 package com.smnatsakanyan.service.OOP_version;
 
-public class AdminRequest implements adminInterface {
-    private static int income;
+public class AdminRequest implements AdminInterface {
     private String name;
-    private CoffeeMachine coffeeMachine;
-    public AdminRequest(String name, CoffeeMachine coffeeMachine){
+
+    public AdminRequest(String name){
         this.name = name;
-        this.coffeeMachine = new CoffeeMachine(coffeeMachine);
     }
 
-    @Override
-    public void fill(Supplies supplies){
-        int water = this.coffeeMachine.getSupplies().getWaterMl() + supplies.getWaterMl();
-        int milk = this.coffeeMachine.getSupplies().getMilkMl() + supplies.getMilkMl();
-        int coffee = this.coffeeMachine.getSupplies().getCoffeeBeansG() + supplies.getCoffeeBeansG();
-        int cups = this.coffeeMachine.getSupplies().getNumberOfCups() + supplies.getNumberOfCups();
+
+    public static void fill(Supplies supplies, CoffeeMachine coffeeMachine){
+        final int water = coffeeMachine.getSupplies().getWaterMl() + supplies.getWaterMl();
+        final int milk = coffeeMachine.getSupplies().getMilkMl() + supplies.getMilkMl();
+        final int coffee = coffeeMachine.getSupplies().getCoffeeBeansG() + supplies.getCoffeeBeansG();
+        final int cups = coffeeMachine.getSupplies().getNumberOfCups() + supplies.getNumberOfCups();
         coffeeMachine.setSupplies(new Supplies(water,milk,coffee,cups));
     }
 
+    //observer pattern
     @Override
-    public int take() {
-        income += coffeeMachine.getMoney();
+    public void take(CoffeeMachine coffeeMachine) {
         coffeeMachine.setMoney(0);
-        return income;
     }
 
     public String getName(){
@@ -33,7 +30,4 @@ public class AdminRequest implements adminInterface {
         this.name = name;
     }
 
-    public CoffeeMachine getCoffeeMachine() {
-        return new CoffeeMachine(coffeeMachine);
-    }
 }

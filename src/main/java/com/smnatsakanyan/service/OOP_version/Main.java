@@ -4,7 +4,7 @@ import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class Main {
-    public static CoffeeMachine buy(CoffeeMachine coffeeMachine, int coffeeType)  throws NotEnoughCoffeeException, NotEnoughMoneyException{
+    public static void buy(CoffeeMachine coffeeMachine, int coffeeType)  throws NotEnoughCoffeeException, NotEnoughMoneyException{
         Coffee coffee = null;
             if(coffeeType == 1){
                 coffee = new Espresso();
@@ -14,29 +14,25 @@ public class Main {
                 coffee = new Cappuccino();
             }
 
-        UserRequestToCoffeeMachine userRequestToCoffeeMachine = new UserRequestToCoffeeMachine(coffee.getPrice(), coffee,coffeeMachine);
-            userRequestToCoffeeMachine.buy(1);
-        return   userRequestToCoffeeMachine.getCoffeeMachine();
+        UserRequestToCoffeeMachine userRequestToCoffeeMachine = new UserRequestToCoffeeMachine(coffee);
+            userRequestToCoffeeMachine.buy(1, coffeeMachine);
     }
 
-    public static  CoffeeMachine fill(int water, int milk, int coffeeGram, int cups, CoffeeMachine coffeeMachine){
-        AdminRequest adminRequest = new AdminRequest("Suren", coffeeMachine);
-        adminRequest.fill(new Supplies(water,milk,coffeeGram,cups));
-        return adminRequest.getCoffeeMachine();
+    public static  void fill(int water, int milk, int coffeeGram, int cups, CoffeeMachine coffeeMachine){
+        AdminRequest.fill(new Supplies(water,milk,coffeeGram,cups),coffeeMachine);
     }
     public static void printCoffeeMachineInfo(CoffeeMachine coffeeMachine){
         System.out.println("The coffee machine has:");
-        System.out.println(coffeeMachine.getSupplies().getWaterMl() + " ml of water");
-        System.out.println(coffeeMachine.getSupplies().getMilkMl() + " ml of milk");
-        System.out.println(coffeeMachine.getSupplies().getCoffeeBeansG() + " g of coffee beans");
-        System.out.println(coffeeMachine.getSupplies().getNumberOfCups() + " disposable cups");
+        System.out.println(((Supplies)coffeeMachine.getSupplies()).getWaterMl() + " ml of water");
+        System.out.println(((Supplies)coffeeMachine.getSupplies()).getMilkMl() + " ml of milk");
+        System.out.println(((Supplies)coffeeMachine.getSupplies()).getCoffeeBeansG() + " g of coffee beans");
+        System.out.println(((Supplies)coffeeMachine.getSupplies()).getNumberOfCups() + " disposable cups");
         System.out.println(coffeeMachine.getMoney() + "$ of money");
     }
 
-    public  static  CoffeeMachine take(CoffeeMachine coffeeMachine){
-        AdminRequest adminRequest = new AdminRequest("Suren", coffeeMachine);
-        adminRequest.take();
-        return  adminRequest.getCoffeeMachine();
+    public  static  void take(CoffeeMachine coffeeMachine){
+        AdminRequest adminRequest = new AdminRequest("Suren");
+        adminRequest.take(coffeeMachine);
     }
     public static void main(String[] args) {
         CoffeeMachine coffeeMachine = new CoffeeMachine(new Supplies(400,540, 120,9), 550);
@@ -50,7 +46,7 @@ public class Main {
                     System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
                     int coffeeType = sc.nextInt();
                     try {
-                        coffeeMachine = buy(coffeeMachine, coffeeType);
+                         buy(coffeeMachine, coffeeType);
                         printCoffeeMachineInfo(coffeeMachine);
                     } catch (NotEnoughCoffeeException | NotEnoughMoneyException e) {
                         System.out.println(e.getMessage());
@@ -65,16 +61,16 @@ public class Main {
                     int coffeeGram = sc.nextInt();
                     System.out.println("Write how many disposable cups you want to add: ");
                     int cups = sc.nextInt();
-                    coffeeMachine = fill(water, milk, coffeeGram, cups, coffeeMachine);
+                     fill(water, milk, coffeeGram, cups, coffeeMachine);
                     printCoffeeMachineInfo(coffeeMachine);
                 }
                 case "take" -> {
                     System.out.println("I gave you $" + coffeeMachine.getMoney());
-                    coffeeMachine = take(coffeeMachine);
+                    take(coffeeMachine);
                     printCoffeeMachineInfo(coffeeMachine);
                 }
             }
-            System.out.println("Write action (buy, fill, take, quit):");
+            System.out.println("Write action (buy, fill, take, quit ):");
             decision = sc.next();
         }
         System.out.println("Bye!");
