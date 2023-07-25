@@ -1,9 +1,11 @@
 package com.smnatsakanyan.service.OOP_version;
 
 import javax.sound.midi.Soundbank;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+
     public static void buy(CoffeeMachine coffeeMachine, int coffeeType)  throws NotEnoughCoffeeException, NotEnoughMoneyException{
         Coffee coffee = null;
             if(coffeeType == 1){
@@ -48,8 +50,10 @@ public class Main {
                     try {
                          buy(coffeeMachine, coffeeType);
                         printCoffeeMachineInfo(coffeeMachine);
-                    } catch (NotEnoughCoffeeException | NotEnoughMoneyException e) {
+                    } catch (NotEnoughCoffeeException e) {
                         System.out.println(e.getMessage());
+                    }catch (NotEnoughMoneyException e){
+
                     }
                 }
                 case "fill" -> {

@@ -19,6 +19,7 @@ public class userRequestToCoffeeMachineTester {
         CoffeeMachine coffeeMachine = new CoffeeMachine();
         userRequestToCoffeeMachine.buy(1,coffeeMachine);
         assertEquals(new CoffeeMachine(new Supplies(150,540,104,8),554),coffeeMachine);
+
     }
 
     @Test
